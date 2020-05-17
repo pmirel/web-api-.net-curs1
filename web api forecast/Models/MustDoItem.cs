@@ -8,9 +8,11 @@ namespace web_api_forecast.Models
 {
     public class MustDoItem
     {
-        public long Id { get; set; }
-        public string Description { get; set; }
-        public bool IsComplete { get; set; }
+        public long id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public double price { get; set; }
+        public bool isAvailable { get; set; }
 
     }
 }

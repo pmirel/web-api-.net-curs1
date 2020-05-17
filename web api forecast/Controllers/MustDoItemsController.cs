@@ -47,7 +47,12 @@ namespace web_api_forecast.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMustDoItem(long id, MustDoItem mustDoItem)
         {
-            if (id != mustDoItem.Id)
+            //validate price
+            if(mustDoItem.price < 0)
+            {
+                return BadRequest("Price can't be negative");
+            }
+            if (id != mustDoItem.id)
             {
                 return BadRequest();
             }
@@ -79,10 +84,15 @@ namespace web_api_forecast.Controllers
         [HttpPost]
         public async Task<ActionResult<MustDoItem>> PostMustDoItem(MustDoItem mustDoItem)
         {
+            //validate price
+            if (mustDoItem.price < 0)
+            {
+                return BadRequest("Price can't be negative");
+            }
             _context.MustDoItems.Add(mustDoItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMustDoItem", new { id = mustDoItem.Id }, mustDoItem);
+            return CreatedAtAction("GetMustDoItem", new { id = mustDoItem.id }, mustDoItem);
         }
 
         // DELETE: api/MustDoItems/5
@@ -103,7 +113,7 @@ namespace web_api_forecast.Controllers
 
         private bool MustDoItemExists(long id)
         {
-            return _context.MustDoItems.Any(e => e.Id == id);
+            return _context.MustDoItems.Any(e => e.id == id);
         }
     }
 }
